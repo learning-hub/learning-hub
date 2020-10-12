@@ -3,15 +3,15 @@
 ## 仓库架构
 
 - learning-hub: 主仓库
-  - learning-hub-serive: 后端主业务
+  - learning-hub-serive: 后端主业务 *
   - learning-hub-web: 前端主业务
   - learning-hub-admin: 后台管理系统
-  - learning-hub-service-judger：判题服务
-  - learning-hub-service-auth：认证服务
-  - learning-hub-service-message：消息服务
+  - learning-hub-service-judger：判题服务 *
+  - learning-hub-service-auth：认证服务 *
+  - learning-hub-service-message：消息服务 *
   - learning-hub-service-logger：日志服务
   - learning-hub-service-configure：配置服务
-  - learning-hub-service-game：竞赛服务
+  - learning-hub-service-game：竞赛服务 *
 
 ## 系统架构
 
