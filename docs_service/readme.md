@@ -3,79 +3,79 @@
 ## 仓库架构
 
 - learning-hub: 主仓库
-  - learning-hub-serive: 后端主业务 *
+  - learning-hub-serive: 后端主业务 \*
   - learning-hub-web: 前端主业务
   - learning-hub-admin: 后台管理系统
-  - learning-hub-service-judger：判题服务 *
-  - learning-hub-service-auth：认证服务 *
-  - learning-hub-service-message：消息服务 *
+  - learning-hub-service-judger：判题服务 \*
+  - learning-hub-service-auth：认证服务 \*
+  - learning-hub-service-message：消息服务 \*
   - learning-hub-service-logger：日志服务
   - learning-hub-service-configure：配置服务
-  - learning-hub-service-game：竞赛服务 *
+  - learning-hub-service-game：竞赛服务 \*
 
 ## 系统架构
 
-![image-20200513133838500](%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3.assets/image-20200513133838500.png)
+![image-20200513133838500](assets/image-20200513133838500.png)
 
 ## 状态码
 
-#### HTTP状态码
+#### HTTP 状态码
 
-| 分类 | 分类描述                                       |
-| :--- | :--------------------------------------------- |
-| 1**  | 信息，服务器收到请求，需要请求者继续执行操作   |
-| 2**  | 成功，操作被成功接收并处理                     |
-| 3**  | 重定向，需要进一步的操作以完成请求             |
-| 4**  | 客户端错误，请求包含语法错误或无法完成请求     |
-| 5**  | 服务器错误，服务器在处理请求的过程中发生了错误 |
+| 分类  | 分类描述                                       |
+| :---- | :--------------------------------------------- |
+| 1\*\* | 信息，服务器收到请求，需要请求者继续执行操作   |
+| 2\*\* | 成功，操作被成功接收并处理                     |
+| 3\*\* | 重定向，需要进一步的操作以完成请求             |
+| 4\*\* | 客户端错误，请求包含语法错误或无法完成请求     |
+| 5\*\* | 服务器错误，服务器在处理请求的过程中发生了错误 |
 
-| 状态码 | 英文名称                        | 中文描述                                                     |
-| :----- | :------------------------------ | :----------------------------------------------------------- |
-| 100    | Continue                        | 继续。[客户端](http://www.dreamdu.com/webbuild/client_vs_server/)应继续其请求 |
-| 101    | Switching Protocols             | 切换协议。服务器根据客户端的请求切换协议。只能切换到更高级的协议，例如，切换到HTTP的新版本协议 |
-|        |                                 |                                                              |
-| 200    | OK                              | 请求成功。一般用于GET与POST请求                              |
-| 201    | Created                         | 已创建。成功请求并创建了新的资源                             |
-| 202    | Accepted                        | 已接受。已经接受请求，但未处理完成                           |
-| 203    | Non-Authoritative Information   | 非授权信息。请求成功。但返回的meta信息不在原始的服务器，而是一个副本 |
-| 204    | No Content                      | 无内容。服务器成功处理，但未返回内容。在未更新网页的情况下，可确保浏览器继续显示当前文档 |
-| 205    | Reset Content                   | 重置内容。服务器处理成功，用户终端（例如：浏览器）应重置文档视图。可通过此返回码清除浏览器的表单域 |
-| 206    | Partial Content                 | 部分内容。服务器成功处理了部分GET请求                        |
-|        |                                 |                                                              |
-| 300    | Multiple Choices                | 多种选择。请求的资源可包括多个位置，相应可返回一个资源特征与地址的列表用于用户终端（例如：浏览器）选择 |
-| 301    | Moved Permanently               | 永久移动。请求的资源已被永久的移动到新URI，返回信息会包括新的URI，浏览器会自动定向到新URI。今后任何新的请求都应使用新的URI代替 |
-| 302    | Found                           | 临时移动。与301类似。但资源只是临时被移动。客户端应继续使用原有URI |
-| 303    | See Other                       | 查看其它地址。与301类似。使用GET和POST请求查看               |
+| 状态码 | 英文名称                        | 中文描述                                                                                                                                                         |
+| :----- | :------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 100    | Continue                        | 继续。[客户端](http://www.dreamdu.com/webbuild/client_vs_server/)应继续其请求                                                                                    |
+| 101    | Switching Protocols             | 切换协议。服务器根据客户端的请求切换协议。只能切换到更高级的协议，例如，切换到 HTTP 的新版本协议                                                                 |
+|        |                                 |                                                                                                                                                                  |
+| 200    | OK                              | 请求成功。一般用于 GET 与 POST 请求                                                                                                                              |
+| 201    | Created                         | 已创建。成功请求并创建了新的资源                                                                                                                                 |
+| 202    | Accepted                        | 已接受。已经接受请求，但未处理完成                                                                                                                               |
+| 203    | Non-Authoritative Information   | 非授权信息。请求成功。但返回的 meta 信息不在原始的服务器，而是一个副本                                                                                           |
+| 204    | No Content                      | 无内容。服务器成功处理，但未返回内容。在未更新网页的情况下，可确保浏览器继续显示当前文档                                                                         |
+| 205    | Reset Content                   | 重置内容。服务器处理成功，用户终端（例如：浏览器）应重置文档视图。可通过此返回码清除浏览器的表单域                                                               |
+| 206    | Partial Content                 | 部分内容。服务器成功处理了部分 GET 请求                                                                                                                          |
+|        |                                 |                                                                                                                                                                  |
+| 300    | Multiple Choices                | 多种选择。请求的资源可包括多个位置，相应可返回一个资源特征与地址的列表用于用户终端（例如：浏览器）选择                                                           |
+| 301    | Moved Permanently               | 永久移动。请求的资源已被永久的移动到新 URI，返回信息会包括新的 URI，浏览器会自动定向到新 URI。今后任何新的请求都应使用新的 URI 代替                              |
+| 302    | Found                           | 临时移动。与 301 类似。但资源只是临时被移动。客户端应继续使用原有 URI                                                                                            |
+| 303    | See Other                       | 查看其它地址。与 301 类似。使用 GET 和 POST 请求查看                                                                                                             |
 | 304    | Not Modified                    | 未修改。所请求的资源未修改，服务器返回此状态码时，不会返回任何资源。客户端通常会缓存访问过的资源，通过提供一个头信息指出客户端希望只返回在指定日期之后修改的资源 |
-| 305    | Use Proxy                       | 使用代理。所请求的资源必须通过代理访问                       |
-| 306    | Unused                          | 已经被废弃的HTTP状态码                                       |
-| 307    | Temporary Redirect              | 临时重定向。与302类似。使用GET请求重定向                     |
-|        |                                 |                                                              |
-| 400    | Bad Request                     | 客户端请求的语法错误，服务器无法理解                         |
-| 401    | Unauthorized                    | 请求要求用户的身份认证                                       |
-| 402    | Payment Required                | 保留，将来使用                                               |
-| 403    | Forbidden                       | 服务器理解请求客户端的请求，但是拒绝执行此请求               |
-| 404    | Not Found                       | 服务器无法根据客户端的请求找到资源（网页）。通过此代码，网站设计人员可设置"您所请求的资源无法找到"的个性页面 |
-| 405    | Method Not Allowed              | 客户端请求中的方法被禁止                                     |
-| 406    | Not Acceptable                  | 服务器无法根据客户端请求的内容特性完成请求                   |
-| 407    | Proxy Authentication Required   | 请求要求代理的身份认证，与401类似，但请求者应当使用代理进行授权 |
-| 408    | Request Time-out                | 服务器等待客户端发送的请求时间过长，超时                     |
-| 409    | Conflict                        | 服务器完成客户端的 PUT 请求时可能返回此代码，服务器处理请求时发生了冲突 |
-| 410    | Gone                            | 客户端请求的资源已经不存在。410不同于404，如果资源以前有现在被永久删除了可使用410代码，网站设计人员可通过301代码指定资源的新位置 |
-| 411    | Length Required                 | 服务器无法处理客户端发送的不带Content-Length的请求信息       |
-| 412    | Precondition Failed             | 客户端请求信息的先决条件错误                                 |
-| 413    | Request Entity Too Large        | 由于请求的实体过大，服务器无法处理，因此拒绝请求。为防止客户端的连续请求，服务器可能会关闭连接。如果只是服务器暂时无法处理，则会包含一个Retry-After的响应信息 |
-| 414    | Request-URI Too Large           | 请求的URI过长（URI通常为网址），服务器无法处理               |
-| 415    | Unsupported Media Type          | 服务器无法处理请求附带的媒体格式                             |
-| 416    | Requested range not satisfiable | 客户端请求的范围无效                                         |
-| 417    | Expectation Failed              | 服务器无法满足Expect的请求头信息                             |
-|        |                                 |                                                              |
-| 500    | Internal Server Error           | 服务器内部错误，无法完成请求                                 |
-| 501    | Not Implemented                 | 服务器不支持请求的功能，无法完成请求                         |
-| 502    | Bad Gateway                     | 作为网关或者代理工作的服务器尝试执行请求时，从远程服务器接收到了一个无效的响应 |
-| 503    | Service Unavailable             | 由于超载或系统维护，服务器暂时的无法处理客户端的请求。延时的长度可包含在服务器的Retry-After头信息中 |
-| 504    | Gateway Time-out                | 充当网关或代理的服务器，未及时从远端服务器获取请求           |
-| 505    | HTTP Version not supported      | 服务器不支持请求的HTTP协议的版本，无法完成处理               |
+| 305    | Use Proxy                       | 使用代理。所请求的资源必须通过代理访问                                                                                                                           |
+| 306    | Unused                          | 已经被废弃的 HTTP 状态码                                                                                                                                         |
+| 307    | Temporary Redirect              | 临时重定向。与 302 类似。使用 GET 请求重定向                                                                                                                     |
+|        |                                 |                                                                                                                                                                  |
+| 400    | Bad Request                     | 客户端请求的语法错误，服务器无法理解                                                                                                                             |
+| 401    | Unauthorized                    | 请求要求用户的身份认证                                                                                                                                           |
+| 402    | Payment Required                | 保留，将来使用                                                                                                                                                   |
+| 403    | Forbidden                       | 服务器理解请求客户端的请求，但是拒绝执行此请求                                                                                                                   |
+| 404    | Not Found                       | 服务器无法根据客户端的请求找到资源（网页）。通过此代码，网站设计人员可设置"您所请求的资源无法找到"的个性页面                                                     |
+| 405    | Method Not Allowed              | 客户端请求中的方法被禁止                                                                                                                                         |
+| 406    | Not Acceptable                  | 服务器无法根据客户端请求的内容特性完成请求                                                                                                                       |
+| 407    | Proxy Authentication Required   | 请求要求代理的身份认证，与 401 类似，但请求者应当使用代理进行授权                                                                                                |
+| 408    | Request Time-out                | 服务器等待客户端发送的请求时间过长，超时                                                                                                                         |
+| 409    | Conflict                        | 服务器完成客户端的 PUT 请求时可能返回此代码，服务器处理请求时发生了冲突                                                                                          |
+| 410    | Gone                            | 客户端请求的资源已经不存在。410 不同于 404，如果资源以前有现在被永久删除了可使用 410 代码，网站设计人员可通过 301 代码指定资源的新位置                           |
+| 411    | Length Required                 | 服务器无法处理客户端发送的不带 Content-Length 的请求信息                                                                                                         |
+| 412    | Precondition Failed             | 客户端请求信息的先决条件错误                                                                                                                                     |
+| 413    | Request Entity Too Large        | 由于请求的实体过大，服务器无法处理，因此拒绝请求。为防止客户端的连续请求，服务器可能会关闭连接。如果只是服务器暂时无法处理，则会包含一个 Retry-After 的响应信息  |
+| 414    | Request-URI Too Large           | 请求的 URI 过长（URI 通常为网址），服务器无法处理                                                                                                                |
+| 415    | Unsupported Media Type          | 服务器无法处理请求附带的媒体格式                                                                                                                                 |
+| 416    | Requested range not satisfiable | 客户端请求的范围无效                                                                                                                                             |
+| 417    | Expectation Failed              | 服务器无法满足 Expect 的请求头信息                                                                                                                               |
+|        |                                 |                                                                                                                                                                  |
+| 500    | Internal Server Error           | 服务器内部错误，无法完成请求                                                                                                                                     |
+| 501    | Not Implemented                 | 服务器不支持请求的功能，无法完成请求                                                                                                                             |
+| 502    | Bad Gateway                     | 作为网关或者代理工作的服务器尝试执行请求时，从远程服务器接收到了一个无效的响应                                                                                   |
+| 503    | Service Unavailable             | 由于超载或系统维护，服务器暂时的无法处理客户端的请求。延时的长度可包含在服务器的 Retry-After 头信息中                                                            |
+| 504    | Gateway Time-out                | 充当网关或代理的服务器，未及时从远端服务器获取请求                                                                                                               |
+| 505    | HTTP Version not supported      | 服务器不支持请求的 HTTP 协议的版本，无法完成处理                                                                                                                 |
 
 ### 注意
 
@@ -83,35 +83,39 @@
 
 ## 主要服务
 
-#### 主服务
+#### 主服务(4000)
 
 > 功能：服务监控，服务转发，网关
 
-#### 判题服务
+#### 判题服务(3000)
 
 > 功能：选择、填空、判断、程序填空、程序运行的题型判断。
 
-#### 竞赛服务
+#### 竞赛服务(2000)
 
 > 功能：竞赛相关。
 
-#### 认证服务
+#### 认证服务(1000)
 
 > 功能：用户的身份认证、包括登录注册、权限分配
 
-#### 配置服务
+#### 配置服务(5000)
 
 > 功能：配置管理，配置注入
 
-#### 消息服务
+#### 消息服务(6000)
 
 > 功能：消息通知、邮件通告
 
-#### 日志服务
+#### 日志服务(7000)
 
 > 功能：日志记录、数据统计
 
-## JWT设计
+#### 数据桶服务(8000)
+
+> 功能：分布式文件存储与上传
+
+## JWT 设计
 
 ```js
 {
@@ -122,48 +126,49 @@
 }
 ```
 
-## API说明
+## API 说明
 
 ### 公共响应
 
 ```js
 // 错误
 {
-    errcode:ErrCode, //错误码
-    errmsg:String, //错误信息
+    errcode: ErrCode, //错误码
+    errmsg: String, //错误信息
 }
-    
+
 // 成功
 {
-    // 数据
+    errcode: 0,
+    data: {}
 }
 ```
 
 ### 分页与过滤
 
-所有API的响应中如果存在数组类型的数据都应该有分页功能,具体格式如下。
+所有 API 的响应中如果存在数组类型的数据都应该有分页功能,具体格式如下。
 
 请求：
 
 ```js
 params = {
-	pageNum:Number, //页码,[1,∞)
-    pageSize:Number, //每页的个数
-    order:String, // <field>[#{ASC|DESC}]
-    filter:String, // <field>[:like]#<查询字符串>
-}
+  pageNum: Number, //页码,[1,∞)
+  pageSize: Number, //每页的个数
+  order: String, // <field>[:{ASC|DESC}]
+  filter: String, // <field>[@like]:<查询字符串>
+};
 ```
 
 响应：
 
 ```js
 {
-    list:[],
+    data:[],
 	page:{
-        num,
-        size,
-        total,//总页数
-        count,//总条数
+        num: Number,  //页码
+        size: Number, //每页的条数
+        total: Number,//总页数
+        count: Number,//总条数
     }
 }
 ```
@@ -278,7 +283,7 @@ params = {
 ```js
 {
 	...
-} 
+}
 ```
 
 响应:
@@ -303,7 +308,7 @@ params = {
             gameCount:Int, //参加比赛数
             reward:Int, //积分
             exp:Int, //经验值
-        } 
+        }
     ],
     ...
 }
@@ -339,7 +344,7 @@ params = {
         reward:Int, //积分
         exp:Int, //经验值
     }
-} 
+}
 ```
 
 #### 用户修改个人信息
@@ -421,7 +426,7 @@ params = {
 }
 ```
 
-#### 获取指定ID的题
+#### 获取指定 ID 的题
 
 接口：GET /api/v1/problems/:problemId
 
@@ -448,8 +453,6 @@ params = {
    }
 }
 ```
-
-
 
 #### 获取竞赛列表
 
@@ -486,8 +489,6 @@ params = {
 }
 ```
 
-
-
 #### 获取竞赛列表
 
 接口： GET /api/v1/games/:gameId
@@ -523,9 +524,7 @@ params = {
 }
 ```
 
-
-
-#### 获取指定竞赛id的竞赛题目
+#### 获取指定竞赛 id 的竞赛题目
 
 接口：GET /api/v1/games/:gameId/problems
 
@@ -561,7 +560,7 @@ params = {
 }
 ```
 
-#### 操作指定竞赛id的竞赛题目
+#### 操作指定竞赛 id 的竞赛题目
 
 接口：GET /api/v1/games/:gameId/problems/:problemId
 
@@ -590,7 +589,7 @@ params = {
 }
 ```
 
-#### 获取指定竞赛id的竞赛人员
+#### 获取指定竞赛 id 的竞赛人员
 
 接口：GET /api/v1/games/gameId/users
 
@@ -608,23 +607,25 @@ params = {
 
 ```js
 {
-	data:[{
-            id:Int,
-            name:String, //姓名
-            nick:String, //昵称
-            sex:String,//性别
-            author:String, //头像
-            note:String, // 备注说明，或者个性签名,
-            username:String, //用户名
-            acCount:Int, //AC题数
-            submitCount:Int, //提交数
-	}]
+  data: [
+    {
+      id: Int,
+      name: String, //姓名
+      nick: String, //昵称
+      sex: String, //性别
+      author: String, //头像
+      note: String, // 备注说明，或者个性签名,
+      username: String, //用户名
+      acCount: Int, //AC题数
+      submitCount: Int, //提交数
+    },
+  ];
 }
 ```
 
 #### 获取公告信息
 
-接口：GET	/api/v1/messages
+接口：GET /api/v1/messages
 
 条件：拥有响应的权限
 
@@ -653,9 +654,9 @@ params = {
 }
 ```
 
-#### 获取指定ID公告信息
+#### 获取指定 ID 公告信息
 
-接口：GET	/api/v1/messages/:messageId
+接口：GET /api/v1/messages/:messageId
 
 条件：拥有响应的权限
 
@@ -684,8 +685,6 @@ params = {
     ...
 }
 ```
-
-
 
 #### 发送信息
 
@@ -763,23 +762,23 @@ params = {
 
 ```js
 {
-	data:[
-		{
-            id:Int(),
-            problemId: Int(10), //题Id
-            userId: Int(10), // 用户ID
-            gameId: Int(), //竞赛ID
-            lang:Int(), //使用的语言
-            code:TEXT(), //用户代码，或者填空，选择填的内容
-            codeLen:Int(), //代码长度
-            passRate:Int(), //通过率
-            type:Varchar(10), //题的类型，select,fill,code
-            time:Int(10), //耗费多少毫秒
-            memory:Int(10), //耗费多少B空间
-            status:Int(), //状态码
-            ip:Varchar(), //IP地址
-		}
-	]
+  data: [
+    {
+      id: Int(),
+      problemId: Int(10), //题Id
+      userId: Int(10), // 用户ID
+      gameId: Int(), //竞赛ID
+      lang: Int(), //使用的语言
+      code: TEXT(), //用户代码，或者填空，选择填的内容
+      codeLen: Int(), //代码长度
+      passRate: Int(), //通过率
+      type: Varchar(10), //题的类型，select,fill,code
+      time: Int(10), //耗费多少毫秒
+      memory: Int(10), //耗费多少B空间
+      status: Int(), //状态码
+      ip: Varchar(), //IP地址
+    },
+  ];
 }
 ```
 
@@ -819,5 +818,3 @@ params = {
 		}
 }
 ```
-
-
