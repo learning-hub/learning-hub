@@ -120,7 +120,6 @@
 ```js
 {
     payload:{
-        roleId:Number, //角色ID
         userId:Number, //用户ID
     },
 }
@@ -140,7 +139,9 @@
 // 成功
 {
     errcode: 0,
-    data: {}
+    token: {},
+    data: {},
+    page: {},
 }
 ```
 
@@ -156,6 +157,7 @@ params = {
   pageSize: Number, //每页的个数
   order: String, // <field>[:{ASC|DESC}]
   filter: String, // <field>[@like]:<查询字符串>
+  in: String, // <field>:<查询的Value> 1,2,3,4 
 };
 ```
 
