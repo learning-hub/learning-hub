@@ -27,7 +27,7 @@
 ### Result判题结果码
 
 ```
-0 等待
+0 正确
 1 判题中
 2 格式错误
 3 答案错误
@@ -37,7 +37,7 @@
 7 编译错误
 ```
 
-#### 语言类型
+### 语言类型
 
 ```
 c
@@ -75,13 +75,12 @@ py3
 
 ###### 判程序题
 
-POST /api/v1/judge/coder
+POST `/api/v1/judger/code`
 
 **请求**
 
 ```js
 {
-    "gameId": Number, // 比赛ID 0=不是比赛
     "problemId": Number, //题ID
     "src": String, // 代码
     "lang": LangType, // 语言类型
@@ -142,28 +141,105 @@ EXECVE_FAILED = -10
 SPJ_ERROR = -11
 ```
 
-###### 判断普通题
+###### 判程序题（比赛）
 
-POST /api/v1/judge/normal/:type
+POST `/api/v1/judger/game/code`
 
 **请求**
 
-- :type
+```js
+{
+    "gameId": Number, // 比赛ID 0=不是比赛
+    "gameProblemId": Number, //题ID
+    "src": String, // 代码
+    "lang": LangType, // 语言类型
+}
+```
 
+**响应**
+
+```js
+{
+    ...,
+    data:{
+    	testcases:[
+            {
+                cpu_time: 12760, // ms
+                error: 0, // look down
+                exit_code: 0,
+                memory: 1617920, // B
+                output: null,
+                output_md5: null,
+                real_time: 14991, // ms
+                result: 1, // look down
+                score: 0,
+                signal: 9,
+                test_case: "1"
+            }
+        ]
+        judger:String, // 判题机器编号
+        create_at:String, // 创建时间
+        finish_at:String, // 完成时间
+    }
+}
 ```
-single => 单选
-multie => 多选
-fill => 填空
-```
+
+###### 判断普通题
+
+POST `/api/v1/judger/normal`
+
+**请求**
 
 - body
 
 ```js
 {
-    "gameId": Number, // 比赛ID 0=不是比赛
+    "type":String,
     "problemId": Number, //题ID
     "answer": String, // 答案 single=选项 multi=选项1,选项2 fill=填写
 }
+/**
+type:
+    single => 单选
+    multie => 多选
+    fill => 填空
+**/
+```
+
+**响应**
+
+```js
+{
+    ...,
+    data:{
+        judger:String, // 判题机器编号
+        create_at:String, // 创建时间
+        finish_at:String, // 完成时间
+    }
+}
+```
+
+###### 判断普通题（比赛）
+
+POST `/api/v1/judger/game/normal`
+
+**请求**
+
+- body
+
+```js
+{
+    "type":String, // 题类型
+    "gameId": Number, // 比赛ID 0=不是比赛
+    "gameProblemId": Number, //题ID
+    "answer": String, // 答案 single=选项 multi=选项1,选项2 fill=填写
+}
+/**
+type:
+    single => 单选
+    multie => 多选
+    fill => 填空
+**/
 ```
 
 **响应**
@@ -181,7 +257,7 @@ fill => 填空
 
 ###### 获取题库
 
-GET /api/v1/problem/:problemId
+GET `/api/v1/problem/:problemId`
 
 **请求**
 
@@ -226,7 +302,7 @@ GET /api/v1/problem/:problemId
 
 ###### 获取题库（群查）
 
-GET /api/v1/problem[/all]
+GET `/api/v1/problem[/all]`
 
 **请求**
 
@@ -261,7 +337,7 @@ GET /api/v1/problem[/all]
 
 ###### 添加题库
 
-POST /api/v1/problem/:type
+POST `/api/v1/problem/:type`
 
 **请求**
 
@@ -301,7 +377,7 @@ fill => 填空题
     
     //multi
     options:[String],
-    answer:String, // 答案1,答案2
+    answers:String, // 答案1,答案2
     
     //fill
     keywords:["关键字1","关键字2"],//答案里出现的关键字,JSON串
@@ -344,7 +420,7 @@ fill => 填空题
 
 ###### 删除题库
 
-DELETE /api/v1/problem/:problemId
+DELETE `/api/v1/problem/:problemId`
 
 **请求**
 
@@ -365,7 +441,7 @@ DELETE /api/v1/problem/:problemId
 
 ###### 修改题库
 
-UPT /api/v1/problem/:problemID
+UPT `/api/v1/problem/:problemID`
 
 **请求**
 
@@ -442,7 +518,7 @@ UPT /api/v1/problem/:problemID
 
 ###### 获取判题机状态
 
-GET /api/v1/judger
+GET `/api/v1/judger`
 
 **请求**
 
@@ -469,7 +545,7 @@ NULL
 
 ###### 获取判题结果状态
 
-GET /api/v1/solution[:/ID]
+GET `/api/v1/solution[:/ID]`
 
 **请求**
 
@@ -503,7 +579,7 @@ GET /api/v1/solution[:/ID]
 
 ###### 获取比赛判题结果状态
 
-GET /api/v1/game/solution[/:ID]
+GET `/api/v1/game/solution[/:ID]`
 
 **请求**
 
@@ -543,7 +619,7 @@ GET /api/v1/game/solution[/:ID]
 
 ###### 获取系统信息
 
-GET /ping
+GET `/ping`
 
 **请求**
 
@@ -566,7 +642,7 @@ Null
 
 ###### 判题
 
-POST /judge
+POST` /judge`
 
 **请求**
 
@@ -667,7 +743,7 @@ SPJ_ERROR = -11
 
 ###### 获取系统信息
 
-GET /ping
+GET `/ping`
 
 **请求**
 
@@ -690,7 +766,7 @@ Null
 
 ###### 判题
 
-POST /judge/:type
+POST `/judge/:type`
 
 **请求**
 
@@ -706,10 +782,19 @@ fill => 填空
 
 ```js
 {
-	problemId:Number, //题ID
+    //single
+    options:[String], //请查看数据库
+   	answer:String
     
-    type:String, 
-	answer:String， //填入答案 single=选项 multi=选项1,选项2 fill=填写
+    //multi
+    options:[String],
+    answers:[String],
+    
+    //fill
+    keywords:["关键字1","关键字2"],//答案里出现的关键字,JSON串
+    nokeywords:["关键字1","关键字2"],//答案里不能出现的关键字,JSON串
+    
+    input:String, //填入答案 single=选项 multi=选项1,选项2 fill=填写
 }
 ```
 

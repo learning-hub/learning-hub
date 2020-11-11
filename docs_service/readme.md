@@ -4,14 +4,10 @@
 
 - learning-hub: 主仓库
   - learning-hub-serive: 后端主业务 \*
+  - learning-hub-service-judger：判题服务 \*
+  - learning-hub-service-gateway：认证服务 \*
   - learning-hub-web: 前端主业务
   - learning-hub-admin: 后台管理系统
-  - learning-hub-service-judger：判题服务 \*
-  - learning-hub-service-auth：认证服务 \*
-  - learning-hub-service-message：消息服务 \*
-  - learning-hub-service-logger：日志服务
-  - learning-hub-service-configure：配置服务
-  - learning-hub-service-game：竞赛服务 \*
 
 ## 系统架构
 
@@ -83,35 +79,19 @@
 
 ## 主要服务
 
-#### 主服务(4000)
+#### 认证网关服务(1000)
 
-> 功能：服务监控，服务转发，网关
+> 功能：服务监控，路由转发，网关、用户的身份认证、登录
+
+#### 主业务服务(2000)
+
+> 功能：用户管理、竞赛相关、消息通知、邮件通告
 
 #### 判题服务(3000)
 
 > 功能：选择、填空、判断、程序填空、程序运行的题型判断。
 
-#### 竞赛服务(2000)
-
-> 功能：竞赛相关。
-
-#### 认证服务(1000)
-
-> 功能：用户的身份认证、包括登录注册、权限分配
-
-#### 配置服务(5000)
-
-> 功能：配置管理，配置注入
-
-#### 消息服务(6000)
-
-> 功能：消息通知、邮件通告
-
-#### 日志服务(7000)
-
-> 功能：日志记录、数据统计
-
-#### 数据桶服务(8000)
+#### 数据桶服务(4000)
 
 > 功能：分布式文件存储与上传
 
@@ -120,7 +100,8 @@
 ```js
 {
     payload:{
-        userId:Number, //用户ID
+        userId:Number, // 用户ID
+        roleId:Number, // 角色ID
     },
 }
 ```
@@ -174,6 +155,8 @@ params = {
     }
 }
 ```
+
+
 
 ## API（草稿，后期要删除）
 
