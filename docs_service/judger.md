@@ -108,9 +108,8 @@ POST `/api/v1/judger/code`
                 test_case: "1"
             }
         ]
-        judger:String, // 判题机器编号
+        job_id: Number, //运行序列ID
         create_at:String, // 创建时间
-        finish_at:String, // 完成时间
     }
 }
 ```
@@ -153,6 +152,7 @@ POST `/api/v1/judger/game/code`
     "gameProblemId": Number, //题ID
     "src": String, // 代码
     "lang": LangType, // 语言类型
+    "groupId":Number, // 如果等于0表示不是组比赛
 }
 ```
 
@@ -177,9 +177,8 @@ POST `/api/v1/judger/game/code`
                 test_case: "1"
             }
         ]
-        judger:String, // 判题机器编号
+        job_id: Number, //运行序列ID
         create_at:String, // 创建时间
-        finish_at:String, // 完成时间
     }
 }
 ```
@@ -212,9 +211,8 @@ type:
 {
     ...,
     data:{
-        judger:String, // 判题机器编号
-        create_at:String, // 创建时间
-        finish_at:String, // 完成时间
+        job_id: Number, //运行序列ID
+        create_at: Number, // 创建时间
     }
 }
 ```
@@ -232,7 +230,8 @@ POST `/api/v1/judger/game/normal`
     "type":String, // 题类型
     "gameId": Number, // 比赛ID 0=不是比赛
     "gameProblemId": Number, //题ID
-    "answer": String, // 答案 single=选项 multi=选项1,选项2 fill=填写
+    "answer": String, // 答案 single=选项 multi=选项1,选项2 fill=填
+    "groupId":Number, // 如果等于0表示不是组比赛
 }
 /**
 type:
@@ -248,9 +247,8 @@ type:
 {
     ...,
     data:{
-        judger:String, // 判题机器编号
+        job_id: Number, //运行序列ID
         create_at:String, // 创建时间
-        finish_at:String, // 完成时间
     }
 }
 ```
