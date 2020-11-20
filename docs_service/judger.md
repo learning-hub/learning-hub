@@ -274,21 +274,21 @@ GET `/api/v1/problem/:problemId`
 ```js
 {
     ...,
-    data:{
+    data:[{
         id:Number,
         is_disabled:Number,
         created_at:Date,
         updated_at:Date,
         type:String,
         title:String,
-        desc:String,
+        description:String,
         hint:String, // 提示
         source:String, //来源
         tags:String, // 标签 如: 算法,数据结构
         hard:Number, //难度
         accepted:Number, //AC人数
         submit:Number, //提交人数
-        //code
+        //程序题
         input:String,//输入说明
         output:String,//输出说明
         sample_input:String,//输入参照
@@ -296,9 +296,9 @@ GET `/api/v1/problem/:problemId`
         spj:String,//是否为特别题目
         time_limit:Number,//限制时间（毫秒）
         memory_limit:Number,//空间限制（兆字节）
-        
+        //其他题的内容
         options:[String],
-    }
+    }]
 }
 ```
 
@@ -326,10 +326,10 @@ GET `/api/v1/problem`
         updated_at:Date,
         type:String,
         title:String,
-        desc:String,
+        description:String,
         hint:String, // 提示
         source:String, //来源
-        tags:String, // 标签 如: 算法,数据结构
+        tags:[String], // 标签 如: 算法,数据结构
         hard:Number, //难度
         accepted:Number, //AC人数
         submit:Number, //提交人数
@@ -358,10 +358,10 @@ fill => 填空题
 {
 	is_disabled:Boolean,
     title:String,
-    desc:String,
+    description:String,
     hint:String, // 提示
     source:String, //来源
-    tags:String[], // 标签 如: 算法,数据结构
+    tags:[String], // 标签 如: 算法,数据结构
     hard:Number, //难度
     //code
     input:String,//输入说明
@@ -399,7 +399,7 @@ fill => 填空题
         updated_at:Date,
         type:String,
         title:String,
-        desc:String,
+        description:String,
         hint:String, // 提示
         source:String, //来源
         tags:String, // 标签 如: 算法,数据结构
@@ -457,7 +457,7 @@ code | single | multi | fill
 {
 	is_disabled:Number,
     title:String,
-    desc:String,
+    description:String,
     hint:String, // 提示
     source:String, //来源
     tags:String, // 标签 如: 算法,数据结构
@@ -500,10 +500,10 @@ code | single | multi | fill
         updated_at:Date,
         type:String,
         title:String,
-        desc:String,
+        description:String,
         hint:String, // 提示
         source:String, //来源
-        tags:String, // 标签 如: 算法,数据结构
+        tags:[String], // 标签 如: 算法,数据结构
         hard:Number, //难度
         accepted:Number, //AC人数
         submit:Number, //提交人数
