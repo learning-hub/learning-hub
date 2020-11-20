@@ -1,3 +1,5 @@
+
+
 ## 判题服务
 
 ### 需求
@@ -183,9 +185,9 @@ POST `/api/v1/judger/game/code`
 }
 ```
 
-###### 判断普通题
+###### 判题
 
-POST `/api/v1/judger/normal`
+POST `/api/v1/judger/:type`
 
 **请求**
 
@@ -193,15 +195,18 @@ POST `/api/v1/judger/normal`
 
 ```js
 {
-    "type":String,
     "problemId": Number, //题ID
-    "answer": String, // 答案 single=选项 multi=选项1,选项2 fill=填写
+     /*-- 用户输入的答案 --*/
+    "answer": String, // single | fill
+    "answers": [String], // multi
+    "src": String, // code
 }
 /**
 type:
     single => 单选
     multie => 多选
     fill => 填空
+    code => 程序
 **/
 ```
 
@@ -217,9 +222,9 @@ type:
 }
 ```
 
-###### 判断普通题（比赛）
+###### 判题（比赛）
 
-POST `/api/v1/judger/game/normal`
+POST `/api/v1/judger/game/:type`
 
 **请求**
 
@@ -227,7 +232,6 @@ POST `/api/v1/judger/game/normal`
 
 ```js
 {
-    "type":String, // 题类型
     "gameId": Number, // 比赛ID 0=不是比赛
     "gameProblemId": Number, //题ID
     "answer": String, // 答案 single=选项 multi=选项1,选项2 fill=填
@@ -300,7 +304,7 @@ GET `/api/v1/problem/:problemId`
 
 ###### 获取题库（群查）
 
-GET `/api/v1/problem[/all]`
+GET `/api/v1/problem`
 
 **请求**
 
@@ -315,7 +319,7 @@ GET `/api/v1/problem[/all]`
 ```js
 {
     ...,
-    data:{
+    data:[{
         id:Number,
         is_disabled:Number,
         created_at:Date,
@@ -329,7 +333,7 @@ GET `/api/v1/problem[/all]`
         hard:Number, //难度
         accepted:Number, //AC人数
         submit:Number, //提交人数
-    }
+    }]
 }
 ```
 
@@ -352,12 +356,12 @@ fill => 填空题
 
 ```js
 {
-	is_disabled:Number,
+	is_disabled:Boolean,
     title:String,
     desc:String,
     hint:String, // 提示
     source:String, //来源
-    tags:String, // 标签 如: 算法,数据结构
+    tags:String[], // 标签 如: 算法,数据结构
     hard:Number, //难度
     //code
     input:String,//输入说明
@@ -375,7 +379,7 @@ fill => 填空题
     
     //multi
     options:[String],
-    answers:String, // 答案1,答案2
+    answers:[String], // 答案1,答案2
     
     //fill
     keywords:["关键字1","关键字2"],//答案里出现的关键字,JSON串
@@ -390,7 +394,7 @@ fill => 填空题
     ...,
     data:{
         id:Number,
-        is_disabled:Number,
+        is_disabled:Boolean,
         created_at:Date,
         updated_at:Date,
         type:String,
@@ -439,7 +443,11 @@ DELETE `/api/v1/problem/:problemId`
 
 ###### 修改题库
 
-UPT `/api/v1/problem/:problemID`
+PUT `/api/v1/problem/:type/:problemID`
+
+**Type**
+
+code | single | multi | fill
 
 **请求**
 
@@ -448,7 +456,6 @@ UPT `/api/v1/problem/:problemID`
 ```js
 {
 	is_disabled:Number,
-    type:String, // code single multi fill
     title:String,
     desc:String,
     hint:String, // 提示
