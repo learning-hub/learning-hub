@@ -59,7 +59,7 @@ py3
 
 **judge-master**
 
-负责对外提供 API、调度判题模块
+负责对外提供 API、调度判题模块、并且内部实现单选题、多选题、填空题的判题
 
 **judge-coder**
 
@@ -67,9 +67,9 @@ py3
 
 负责对程序题进行判断
 
-**judge-normal**
+#### 请求头
 
-负责对普通（单选、多选、填空、问答）的题型判断
+X-USER => 用户ID
 
 #### API
 
@@ -86,6 +86,7 @@ POST `/api/v1/judger/code`
     "problemId": Number, //题ID
     "src": String, // 代码
     "lang": LangType, // 语言类型
+    "isOutput":Boolean //是否输出
 }
 ```
 
@@ -93,53 +94,29 @@ POST `/api/v1/judger/code`
 
 ```js
 {
-    ...,
-    data:{
-    	testcases:[
-            {
-                cpu_time: 12760, // ms
-                error: 0, // look down
-                exit_code: 0,
-                memory: 1617920, // B
-                output: null,
-                output_md5: null,
-                real_time: 14991, // ms
-                result: 1, // look down
-                score: 0,
-                signal: 9,
-                test_case: "1"
-            }
-        ]
-        job_id: Number, //运行序列ID
-        create_at:String, // 创建时间
-    }
+    "data": {
+        "probleme_id": 6,
+        "user_id": 1,
+        "ip": "127.0.0.1",
+        "type": "code",
+        "data": {
+            "src": "#include \"stdio.h\"\n\nint main(){\n  int a,b;\n  while(scanf(\"%d%d\", &a, &b)!=EOF){\n    printf(\"%d\", a+b);\n  }\n  return 0;\n}",
+            "isOutput": true,
+            "lang": "c"
+        },
+        "deleted_at": null,
+        "id": 7,
+        "is_disabled": false,
+        "created_at": "2020-11-22T22:38:46.779Z",
+        "updated_at": "2020-11-22T22:38:46.779Z",
+        "game_id": 0,
+        "game_problem_id": 0,
+        "group_id": 0,
+        "result": 0,
+        "job_id": "7"
+    },
+    "errcode": 0
 }
-```
-
-```
-testcase
-result field return value
-WRONG_ANSWER = -1 (this means the process exited normally, but the answer is wrong)
-SUCCESS = 0 (this means the answer is accepted)
-CPU_TIME_LIMIT_EXCEEDED = 1
-REAL_TIME_LIMIT_EXCEEDED = 2
-MEMORY_LIMIT_EXCEEDED = 3
-RUNTIME_ERROR = 4
-SYSTEM_ERROR = 5
-
-error field return value
-SUCCESS = 0
-INVALID_CONFIG = -1
-CLONE_FAILED = -2
-PTHREAD_FAILED = -3
-WAIT_FAILED = -4
-ROOT_REQUIRED = -5
-LOAD_SECCOMP_FAILED = -6
-SETRLIMIT_FAILED = -7
-DUP2_FAILED = -8
-SETUID_FAILED = -9
-EXECVE_FAILED = -10
-SPJ_ERROR = -11
 ```
 
 ###### 判程序题（比赛）
@@ -161,28 +138,7 @@ POST `/api/v1/judger/game/code`
 **响应**
 
 ```js
-{
-    ...,
-    data:{
-    	testcases:[
-            {
-                cpu_time: 12760, // ms
-                error: 0, // look down
-                exit_code: 0,
-                memory: 1617920, // B
-                output: null,
-                output_md5: null,
-                real_time: 14991, // ms
-                result: 1, // look down
-                score: 0,
-                signal: 9,
-                test_case: "1"
-            }
-        ]
-        job_id: Number, //运行序列ID
-        create_at:String, // 创建时间
-    }
-}
+//同上
 ```
 
 ###### 判题
@@ -206,7 +162,7 @@ type:
     single => 单选
     multie => 多选
     fill => 填空
-    code => 程序
+    code => 程序 看上面的·判程序题·
 **/
 ```
 
@@ -214,11 +170,28 @@ type:
 
 ```js
 {
-    ...,
-    data:{
-        job_id: Number, //运行序列ID
-        create_at: Number, // 创建时间
-    }
+    "data": {
+        "probleme_id": 6,
+        "user_id": 1,
+        "ip": "127.0.0.1",
+        "type": "code",
+        "data": {
+            "src": "#include \"stdio.h\"\n\nint main(){\n  int a,b;\n  while(scanf(\"%d%d\", &a, &b)!=EOF){\n    printf(\"%d\", a+b);\n  }\n  return 0;\n}",
+            "isOutput": true,
+            "lang": "c"
+        },
+        "deleted_at": null,
+        "id": 7,
+        "is_disabled": false,
+        "created_at": "2020-11-22T22:38:46.779Z",
+        "updated_at": "2020-11-22T22:38:46.779Z",
+        "game_id": 0,
+        "game_problem_id": 0,
+        "group_id": 0,
+        "result": 0,
+        "job_id": "7"
+    },
+    "errcode": 0
 }
 ```
 
@@ -248,13 +221,7 @@ type:
 **响应**
 
 ```js
-{
-    ...,
-    data:{
-        job_id: Number, //运行序列ID
-        create_at:String, // 创建时间
-    }
-}
+// 同上
 ```
 
 ###### 获取题库
@@ -266,39 +233,149 @@ GET `/api/v1/problem/:problemId`
 - :problemId
 
 ```
-[1, +) => 表示用户的ID
+[1, +) => 表示题目的ID
 ```
 
 **响应**
 
 ```js
+//code
 {
-    ...,
-    data:[{
-        id:Number,
-        is_disabled:Number,
-        created_at:Date,
-        updated_at:Date,
-        type:String,
-        title:String,
-        description:String,
-        hint:String, // 提示
-        source:String, //来源
-        tags:String, // 标签 如: 算法,数据结构
-        hard:Number, //难度
-        accepted:Number, //AC人数
-        submit:Number, //提交人数
-        //程序题
-        input:String,//输入说明
-        output:String,//输出说明
-        sample_input:String,//输入参照
-        sample_output:String,//输出参照
-        spj:String,//是否为特别题目
-        time_limit:Number,//限制时间（毫秒）
-        memory_limit:Number,//空间限制（兆字节）
-        //其他题的内容
-        options:[String],
-    }]
+    "data": {
+        "title": "A+B",
+        "description": "测试题",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "input": "输入两个数",
+            "output": "输出他的结果",
+            "sample_input": "1 2",
+            "sample_output": "3\n",
+            "time_limit": 1000,
+            "memory_limit": 134217728,
+            "src": "#include \"stdio.h\"\n\nint main(){\n  int a,b;\n  while(scanf(\"%d%d\", &a, &b)!=EOF){\n    printf(\"%d\\n\", a+b);\n  }\n  return 0;\n}"
+        },
+        "type": "code",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 7,
+        "created_at": "2020-11-23T05:35:06.212Z",
+        "updated_at": "2020-11-23T05:35:06.212Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
+}
+
+//single
+{
+    "data": {
+        "title": "测试题7",
+        "description": "hello",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "answer": "选项B",
+            "options": [
+                "选项A",
+                "选项B",
+                "选项C"
+            ]
+        },
+        "type": "single",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 8,
+        "created_at": "2020-11-23T05:54:15.990Z",
+        "updated_at": "2020-11-23T05:54:15.990Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
+}
+
+//multi
+{
+    "data": {
+        "title": "测试题7",
+        "description": "hello",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "answers": [
+                "选项B",
+                "选项C"
+            ],
+            "options": [
+                "选项A",
+                "选项B",
+                "选项C"
+            ]
+        },
+        "type": "multi",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 9,
+        "created_at": "2020-11-23T06:23:01.644Z",
+        "updated_at": "2020-11-23T06:23:01.644Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
+}
+
+//fill
+{
+    "data": {
+        "title": "测试题7",
+        "description": "hello",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "keywords": [
+                "允许的关键字",
+                "允许的关键字",
+                "允许的关键字"
+            ],
+            "nokeywords": [
+                "不允许的关键字",
+                "不允许的关键字"
+            ]
+        },
+        "type": "fill",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 11,
+        "created_at": "2020-11-23T06:25:03.967Z",
+        "updated_at": "2020-11-23T06:25:03.967Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
 }
 ```
 
@@ -319,21 +396,7 @@ GET `/api/v1/problem`
 ```js
 {
     ...,
-    data:[{
-        id:Number,
-        is_disabled:Number,
-        created_at:Date,
-        updated_at:Date,
-        type:String,
-        title:String,
-        description:String,
-        hint:String, // 提示
-        source:String, //来源
-        tags:[String], // 标签 如: 算法,数据结构
-        hard:Number, //难度
-        accepted:Number, //AC人数
-        submit:Number, //提交人数
-    }]
+    data:[/*同上*/]
 }
 ```
 
@@ -355,68 +418,204 @@ fill => 填空题
 - Body
 
 ```js
+//code
 {
-	is_disabled:Boolean,
-    title:String,
-    description:String,
-    hint:String, // 提示
-    source:String, //来源
-    tags:[String], // 标签 如: 算法,数据结构
-    hard:Number, //难度
-    //code
-    input:String,//输入说明
-	output:String,//输出说明
-	sample_input:String,//输入参照
-	sample_output:String,//输出参照
-	spj:String,//是否为特别题目
-    time_limit:Number,//限制时间（毫秒）
-	memory_limit:Number,//空间限制（兆字节）
-    code:String//程序源码 
+    "is_disabled":false,
+    "title":"A+B",
+    "description":"测试题",
+    "hint":"测试题目",
+    "tags":["算法", "数据结构"],
+    "source":"LH",
+    "hard":10,
+    "input": "输入两个数",
+    "output": "输出他的结果",
+    "sample_input": "1 2",
+    "sample_output": "3\n",
+    "time_limit": 1000,
+    "memory_limit": 134217728,
+    "src": "#include \"stdio.h\"\n\nint main(){\n  int a,b;\n  while(scanf(\"%d%d\", &a, &b)!=EOF){\n    printf(\"%d\\n\", a+b);\n  }\n  return 0;\n}"
+}
 
-    //single
-    options:[String],
-    answer:String,
-    
-    //multi
-    options:[String],
-    answers:[String], // 答案1,答案2
-    
-    //fill
-    keywords:["关键字1","关键字2"],//答案里出现的关键字,JSON串
-    nokeywords:["关键字1","关键字2"],//答案里不能出现的关键字,JSON串
+//single
+{
+    "is_disabled":false,
+    "title":"测试题7",
+    "description":"hello",
+    "hint":"测试题目",
+    "tags":["算法", "数据结构"],
+    "source":"LH",
+    "hard":10,
+    "options":["选项A", "选项B", "选项C"],
+    "answer": "选项B"
+}
+
+//multi
+{
+    "is_disabled":false,
+    "title":"测试题7",
+    "description":"hello",
+    "hint":"测试题目",
+    "tags":["算法", "数据结构"],
+    "source":"LH",
+    "hard":10,
+    "options":["选项A", "选项B", "选项C"],
+    "answers": ["选项B", "选项C"]
+}
+
+//fill
+{
+    "is_disabled":false,
+    "title":"测试题7",
+    "description":"hello",
+    "hint":"测试题目",
+    "tags":["算法", "数据结构"],
+    "source":"LH",
+    "hard":10,
+    "keywords":["允许的关键字", "允许的关键字", "允许的关键字"],
+    "nokeywords": ["不允许的关键字", "不允许的关键字"]
 }
 ```
 
 **响应**
 
 ```js
+//code
 {
-    ...,
-    data:{
-        id:Number,
-        is_disabled:Boolean,
-        created_at:Date,
-        updated_at:Date,
-        type:String,
-        title:String,
-        description:String,
-        hint:String, // 提示
-        source:String, //来源
-        tags:String, // 标签 如: 算法,数据结构
-        hard:Number, //难度
-        accepted:Number, //AC人数
-        submit:Number, //提交人数
-        //code
-        input:String,//输入说明
-        output:String,//输出说明
-        sample_input:String,//输入参照
-        sample_output:String,//输出参照
-        spj:String,//是否为特别题目
-        time_limit:Number,//限制时间（毫秒）
-        memory_limit:Number,//空间限制（兆字节）
-        
-        options:[String],
-    }
+    "data": {
+        "title": "A+B",
+        "description": "测试题",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "input": "输入两个数",
+            "output": "输出他的结果",
+            "sample_input": "1 2",
+            "sample_output": "3\n",
+            "time_limit": 1000,
+            "memory_limit": 134217728,
+            "src": "#include \"stdio.h\"\n\nint main(){\n  int a,b;\n  while(scanf(\"%d%d\", &a, &b)!=EOF){\n    printf(\"%d\\n\", a+b);\n  }\n  return 0;\n}"
+        },
+        "type": "code",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 7,
+        "created_at": "2020-11-23T05:35:06.212Z",
+        "updated_at": "2020-11-23T05:35:06.212Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
+}
+
+//single
+{
+    "data": {
+        "title": "测试题7",
+        "description": "hello",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "answer": "选项B",
+            "options": [
+                "选项A",
+                "选项B",
+                "选项C"
+            ]
+        },
+        "type": "single",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 8,
+        "created_at": "2020-11-23T05:54:15.990Z",
+        "updated_at": "2020-11-23T05:54:15.990Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
+}
+
+//multi
+{
+    "data": {
+        "title": "测试题7",
+        "description": "hello",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "answers": [
+                "选项B",
+                "选项C"
+            ],
+            "options": [
+                "选项A",
+                "选项B",
+                "选项C"
+            ]
+        },
+        "type": "multi",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 9,
+        "created_at": "2020-11-23T06:23:01.644Z",
+        "updated_at": "2020-11-23T06:23:01.644Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
+}
+
+//fill
+{
+    "data": {
+        "title": "测试题7",
+        "description": "hello",
+        "is_disabled": false,
+        "hint": "测试题目",
+        "source": "LH",
+        "tags": [
+            "算法",
+            "数据结构"
+        ],
+        "hard": 10,
+        "data": {
+            "keywords": [
+                "允许的关键字",
+                "允许的关键字",
+                "允许的关键字"
+            ],
+            "nokeywords": [
+                "不允许的关键字",
+                "不允许的关键字"
+            ]
+        },
+        "type": "fill",
+        "create_user_id": 0,
+        "deleted_at": null,
+        "id": 11,
+        "created_at": "2020-11-23T06:25:03.967Z",
+        "updated_at": "2020-11-23T06:25:03.967Z",
+        "ac_num": 0,
+        "submit_num": 0
+    },
+    "errcode": 0
 }
 ```
 
@@ -740,76 +939,6 @@ DUP2_FAILED = -8
 SETUID_FAILED = -9
 EXECVE_FAILED = -10
 SPJ_ERROR = -11
-```
-
-
-
-##### judge-normal
-
-###### 获取系统信息
-
-GET `/ping`
-
-**请求**
-
-Null
-
-**响应**
-
-```js
-{
-    "judger_version": "2.0.1",
-    "hostname": "d3765528134e", // 同时也是ID
-    // number of cpu cores, this value will determine the number of concurrent tasks
-    "cpu_core": 1,
-    // usage of cpu and memory
-    "cpu": 4.1,
-    "memory": 24.5,
-    "action": "pong"
-}
-```
-
-###### 判题
-
-POST `/judge/:type`
-
-**请求**
-
-- :type
-
-```
-single => 单选
-multie => 多选
-fill => 填空
-```
-
-- Body
-
-```js
-{
-    //single
-    options:[String], //请查看数据库
-   	answer:String
-    
-    //multi
-    options:[String],
-    answers:[String],
-    
-    //fill
-    keywords:["关键字1","关键字2"],//答案里出现的关键字,JSON串
-    nokeywords:["关键字1","关键字2"],//答案里不能出现的关键字,JSON串
-    
-    input:String, //填入答案 single=选项 multi=选项1,选项2 fill=填写
-}
-```
-
-**响应**
-
-```js
-{
-    ...,
-    result:Number, //1是正确 0是错误
-}
 ```
 
 
