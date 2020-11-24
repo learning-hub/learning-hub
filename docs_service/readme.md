@@ -158,7 +158,6 @@ params = {
 ### 公共请求头
 
 ```
-X-USER => 用户ID
 X-TOKEN => 请求TOKEN
 ```
 
