@@ -1,4 +1,4 @@
-# Learning Hub权限管理开发文档
+#  Learning Hub权限管理开发文档
 
 ### 需求
 
@@ -243,6 +243,70 @@
 }
 ```
 
+#### 添加用户
+
+接口：POST `/api/v1/user`
+
+条件：NULL
+
+请求：
+
+```js
+{
+				role_id:int				//角色id
+        realname: String,	//姓名
+    		nick: String,			//昵称
+        sex: char,				//性别
+        email: String,		//电子邮箱	
+        avatar: String,		//头像	
+        note: String,			//备注，个性签名
+        username: String,	//用户名
+        password: String	//密码
+}
+```
+
+响应：
+
+```js
+{
+  	errcode:int 					//状态码
+  	errmsg:String					//状态信息
+    data:{
+  			user: {
+            id: int,					//user_id
+            is_disabled: int,	//默认0可以用，1禁用
+            is_del: int,				//默认0可以用，1删除
+            created_at: Date,	//创建时间
+            updated_at: Date, //更新时间
+            school_id: int,		//学校id
+            role_id: int,				//角色id
+            realname: String,	//姓名
+            nick: String,			//昵称
+            sex: char,				//性别
+            email: String,		//电子邮箱	
+            avatar: String,		//头像	
+            note: String,			//备注，个性签名
+            username: String,	//用户名
+            ac_count: int,		//ac数
+            submit_count: int,//提交数
+            game_count: int,	//参加比赛的数
+            reward: int,			//积分
+            exp: int					//经验值
+  					role:{
+  							id:int						//roleId
+  							is_disabled:int		//默认0可以用，1禁用
+  							is_del: int,			//默认0可以用，1删除
+            		created_at: Date,	//创建时间
+            		updated_at: Date, //更新时间
+  							name:String				//role名字
+  							info:String				//role介绍
+  							parent_id:int			//role的父id
+						}
+        }
+		}	
+}
+```
+
 #### 获取用户列表
 
 接口: GET `/api/v1/users`
@@ -406,6 +470,69 @@
 }
 ```
 
+#### 管理员修改用户信息
+
+接口: PUT `/api/v1/addUser/:userId`
+
+条件：指定权限的用户才可操作
+
+请求：
+
+```js
+{
+        realname: String,	//姓名
+    		nick: String,			//昵称
+        sex: char,				//性别
+        email: String,		//电子邮箱	
+        avatar: String,		//头像	
+        note: String,			//备注，个性签名
+        username: String,	//用户名
+        password:String		//密码
+}
+```
+
+响应：
+
+```js
+{
+    errcode:int 					//状态码
+ 		errmsg:String					//状态信息
+		data:{
+    		user: {
+            id: int,					//user_id
+            is_disabled: int,	//默认0可以用，1禁用
+            is_del: int,				//默认0可以用，1删除
+            created_at: Date,	//创建时间
+            updated_at: Date, //更新时间
+            school_id: int,		//学校id
+            role_id: int,				//角色id
+            realname: String,	//姓名
+            nick: String,			//昵称
+            sex: char,				//性别
+            email: String,		//电子邮箱	
+            avatar: String,		//头像	
+            note: String,			//备注，个性签名
+            username: String,	//用户名
+            ac_count: int,		//ac数
+            submit_count: int,//提交数
+            game_count: int,	//参加比赛的数
+            reward: int,			//积分
+            exp: int					//经验值
+  					role:{
+  							id:int						//roleId
+  							is_disabled:int		//默认0可以用，1禁用
+  							is_del: int,			//默认0可以用，1删除
+            		created_at: Date,	//创建时间
+            		updated_at: Date, //更新时间
+  							name:String				//role名字
+  							info:String				//role介绍
+  							parent_id:int			//role的父id
+						}
+        } 	
+    }
+}
+```
+
 #### 用户修改密码
 
 接口: PUT `/api/v1/user/:userId/password`
@@ -427,6 +554,23 @@
 {
   	errcode:int 					//状态码
   	errmsg:String					//状态信息
+}
+```
+
+#### 删除用户
+
+接口：DELETE `/api/v1/usre/:userId`
+
+条件：拥有响应的权限
+
+请求：NUL l
+
+响应：
+
+```js
+{
+  		errcode:int 				//状态码
+      errmsg:String				//状态信息
 }
 ```
 
@@ -602,6 +746,30 @@
 #### 添加成员到用户组
 
 接口：POST `/api/v1/addUserToGroup`
+
+条件：拥有相应的权限
+
+请求：
+
+```js
+{
+  		group_id:int		//组id
+      user_id:int	//用户id			
+}
+```
+
+响应：
+
+```js
+{
+  		errcode:int 				//状态码
+      errmsg:String				//状态信息
+}
+```
+
+#### 删除用户组中的某个用户
+
+接口：DELETE `/api/v1/deleteUserToGroup`
 
 条件：拥有相应的权限
 
