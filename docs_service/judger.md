@@ -772,9 +772,9 @@ code | single | multi | fill
     description:String,
     hint:String, // 提示
     source:String, //来源
-    tags:String, // 标签 如: 算法,数据结构
+    tags:[String], // 标签 如: 算法,数据结构
     hard:Number, //难度
-    //code
+    //type == code
     input:String,//输入说明
 	output:String,//输出说明
 	sample_input:String,//输入参照
@@ -784,15 +784,15 @@ code | single | multi | fill
 	memory_limit:Number,//空间限制（兆字节）
     code:String//程序源码 
 
-    //single
+    //type == single
     options:[String],
     answer:String,
     
-    //multi
+    //type == multi
     options:[String],
     answers:[String],
     
-    //fill
+    //type == fill
     keywords:["关键字1","关键字2"],//答案里出现的关键字,JSON串
     nokeywords:["关键字1","关键字2"],//答案里不能出现的关键字,JSON串
 }
