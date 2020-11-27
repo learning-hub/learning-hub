@@ -779,10 +779,9 @@ code | single | multi | fill
 	output:String,//输出说明
 	sample_input:String,//输入参照
 	sample_output:String,//输出参照
-	spj:String,//是否为特别题目
     time_limit:Number,//限制时间（毫秒）
-	memory_limit:Number,//空间限制（兆字节）
-    code:String//程序源码 
+	memory_limit:Number,//空间限制（字节）
+    src:String//程序源码 
 
     //type == single
     options:[String],
@@ -1376,6 +1375,33 @@ GET /api/v1/judger/job[/:id]
     }
 }
 ```
+
+###### 获取所有API
+
+GET /api
+
+**请求**
+
+```js
+null
+```
+
+**响应**
+
+```
+{
+	errcode:0,
+	data:[
+		{
+			protocol: String, //协议
+			type: String, //类型
+			router: String, //路由
+		}
+	]
+}
+```
+
+
 
 ##### judge-coder
 
