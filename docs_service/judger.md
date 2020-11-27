@@ -1378,7 +1378,7 @@ GET /api/v1/judger/job[/:id]
 
 ###### 获取所有API
 
-GET /api
+GET /api/v1
 
 **请求**
 
