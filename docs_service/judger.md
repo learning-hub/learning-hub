@@ -772,27 +772,26 @@ code | single | multi | fill
     description:String,
     hint:String, // 提示
     source:String, //来源
-    tags:String, // 标签 如: 算法,数据结构
+    tags:[String], // 标签 如: 算法,数据结构
     hard:Number, //难度
-    //code
+    //type == code
     input:String,//输入说明
 	output:String,//输出说明
 	sample_input:String,//输入参照
 	sample_output:String,//输出参照
-	spj:String,//是否为特别题目
     time_limit:Number,//限制时间（毫秒）
-	memory_limit:Number,//空间限制（兆字节）
-    code:String//程序源码 
+	memory_limit:Number,//空间限制（字节）
+    src:String//程序源码 
 
-    //single
+    //type == single
     options:[String],
     answer:String,
     
-    //multi
+    //type == multi
     options:[String],
     answers:[String],
     
-    //fill
+    //type == fill
     keywords:["关键字1","关键字2"],//答案里出现的关键字,JSON串
     nokeywords:["关键字1","关键字2"],//答案里不能出现的关键字,JSON串
 }
@@ -1376,6 +1375,33 @@ GET /api/v1/judger/job[/:id]
     }
 }
 ```
+
+###### 获取所有API
+
+GET /api/v1
+
+**请求**
+
+```js
+null
+```
+
+**响应**
+
+```
+{
+	errcode:0,
+	data:[
+		{
+			protocol: String, //协议
+			type: String, //类型
+			router: String, //路由
+		}
+	]
+}
+```
+
+
 
 ##### judge-coder
 
