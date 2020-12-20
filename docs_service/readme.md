@@ -151,8 +151,9 @@
 params = {
   pageNum: Number, //页码,[1,∞)
   pageSize: Number, //每页的个数
-  order: String, // <field>[:{ASC|DESC}]
-  filter: String, // <field>[@[!]{like|in|default}]:<查询字符串> | NULL
+  order: String, // <field>[:{ASC|DESC}] //排序
+  filter: String, // <field>[@[!]{like|in|default}]:<查询字符串> | NULL //过滤查询
+  select: String, // field1,field2,field3,... //按需请求
 };
 ```
 
@@ -169,6 +170,8 @@ params = {
     }
 }
 ```
+
+
 
 ### 公共请求头
 
