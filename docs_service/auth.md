@@ -472,7 +472,7 @@
 
 #### 管理员修改用户信息
 
-接口: PUT `/api/v1/addUser/:userId`
+接口: PUT `/api/v1/updateUser`
 
 条件：指定权限的用户才可操作
 
@@ -480,10 +480,12 @@
 
 ```js
 {
+  			id:int						//id
         realname: String,	//姓名
     		nick: String,			//昵称
         sex: char,				//性别
         email: String,		//电子邮箱	
+        role_id:int				//角色id
         avatar: String,		//头像	
         note: String,			//备注，个性签名
         username: String,	//用户名
@@ -559,7 +561,7 @@
 
 #### 删除用户
 
-接口：DELETE `/api/v1/usre/:userId`
+接口：DELETE `/api/v1/user/:userId`
 
 条件：拥有响应的权限
 
@@ -645,6 +647,7 @@
 {
   	 	errcode:int 					//状态码
   		errmsg:String					//状态信息
+      userId:int 						//userId
 }
 ```
 
@@ -1319,3 +1322,4 @@
     }
 }
 ```
+
