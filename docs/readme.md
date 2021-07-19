@@ -144,7 +144,7 @@ class Auth extends SchemaBase {
   type: AuthType;
   createdAt: number;
   secret: string; // 登录秘钥，算法 has128(rawJSON)
-  rawJSON: string; // 组成：{ type, createdAt, ...其他信息 },
+  rawJSON: string; // 组成如下
   /**
    * 如：
    * LOCAL登录
